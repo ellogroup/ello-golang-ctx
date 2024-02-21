@@ -1,10 +1,10 @@
 module github.com/ellogroup/ello-golang-ctx
 
-go 1.21.3
+go 1.22
 
 require (
 	github.com/stretchr/testify v1.8.4
-	go.uber.org/zap v1.26.0
+	go.uber.org/zap v1.27.0
 )
 
 require (

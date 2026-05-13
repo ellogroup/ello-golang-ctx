@@ -1,4 +1,4 @@
-name: Application Tests
+name: Package Tests
 
 on:
   workflow_dispatch:
@@ -7,28 +7,38 @@ on:
       - '**'
 
 jobs:
-  run-application-tests:
-    name: Run Application Tests
+  linter:
+    name: Go Linter
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v6
         with:
           go-version-file: './go.mod'
           cache-dependency-path: './go.sum'
 
       - name: Run Go Linter
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v8
         with:
-          version: 'v1.54'
-          working-directory: '.'
-          skip-pkg-cache: true
-          skip-build-cache: true
-          args: '--timeout=2m'
+          version: latest
+
+  gosec:
+    name: Gosec Security Scanner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: './go.mod'
+          cache-dependency-path: './go.sum'
 
       - name: Run Gosec Security Scanner
         uses: ellogroup/gosec-action@v1
@@ -36,11 +46,39 @@ jobs:
           working-directory: '.'
           go-package: './...'
 
-      - name: Run Govulncheck Vulnerability Check
+  govulncheck:
+    name: Govulncheck Vulnerability Checker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: './go.mod'
+          cache-dependency-path: './go.sum'
+
+      - name: Run Govulncheck Vulnerability Checker
         uses: ellogroup/govulncheck-action@v1
         with:
           working-directory: '.'
           go-package: './...'
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: './go.mod'
+          cache-dependency-path: './go.sum'
 
       - name: Run Unit Tests
         working-directory: '.'

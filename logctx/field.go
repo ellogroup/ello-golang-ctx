@@ -31,6 +31,6 @@ func Duration(key string, val time.Duration) Field {
 	return Field(slog.Duration(key, val))
 }
 
-func Any(key string, val interface{}) Field {
+func Any(key string, val any) Field {
 	return Field(slog.Any(key, val))
 }

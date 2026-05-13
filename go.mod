@@ -1,4 +1,4 @@
-module github.com/ellogroup/ello-golang-ctx
+module github.com/ellogroup/ello-golang-ctx/v2
 
 go 1.26
 

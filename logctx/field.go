@@ -1,44 +1,36 @@
 package logctx
 
 import (
-	"go.uber.org/zap"
+	"log/slog"
 	"time"
 )
 
-type Field zap.Field
+type Field slog.Attr
 
 func String(key, val string) Field {
-	return Field(zap.String(key, val))
+	return Field(slog.String(key, val))
 }
 
 func Int(key string, val int) Field {
-	return Field(zap.Int(key, val))
-}
-
-func Float32(key string, val float32) Field {
-	return Field(zap.Float32(key, val))
+	return Field(slog.Int(key, val))
 }
 
 func Float64(key string, val float64) Field {
-	return Field(zap.Float64(key, val))
+	return Field(slog.Float64(key, val))
 }
 
 func Bool(key string, val bool) Field {
-	return Field(zap.Bool(key, val))
+	return Field(slog.Bool(key, val))
 }
 
 func Time(key string, val time.Time) Field {
-	return Field(zap.Time(key, val))
+	return Field(slog.Time(key, val))
 }
 
 func Duration(key string, val time.Duration) Field {
-	return Field(zap.Duration(key, val))
+	return Field(slog.Duration(key, val))
 }
 
 func Any(key string, val interface{}) Field {
-	return Field(zap.Any(key, val))
-}
-
-func Error(err error) Field {
-	return Field(zap.Error(err))
+	return Field(slog.Any(key, val))
 }
